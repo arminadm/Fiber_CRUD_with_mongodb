@@ -59,7 +59,7 @@ func main() {
 
 	// Environment variables
 	DB_URI = os.Getenv("DB_URI")
-	CSV_PATH = os.Getenv("RESOURCE_PATH")
+	CSV_PATH = os.Getenv("CSV_PATH")
 
 	// Create a MongoDB client
 	client, err := mongo.NewClient(options.Client().ApplyURI(DB_URI))
@@ -89,7 +89,9 @@ func main() {
 	app.Delete("/series/:id", deleteSingleSeriesHandler(seriesCollection))
 
 	// Start the server
-	log.Fatal(app.Listen(":3000"))
+	if err := app.Listen(":3000"); err != nil {
+		log.Fatal(err)
+	}
 }
 
 // @Summary import csv data
