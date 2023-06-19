@@ -25,30 +25,30 @@ import (
 // Define a struct to represent the data model
 type Series struct {
 	ID         primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	Reference  string             `json:"Reference,omitempty" bson:"Reference,omitempty"`
-	Period     string             `json:"Period,omitempty" bson:"Period,omitempty"`
-	DataValue  float32            `json:"Data_value,omitempty" bson:"Data_value,omitempty"`
-	Suppressed bool               `json:"Suppressed,omitempty" bson:"Suppressed,omitempty"`
-	Status     string             `json:"Status,omitempty" bson:"Status,omitempty"`
-	Units      string             `json:"Units,omitempty" bson:"Units,omitempty"`
-	Magnitude  int32              `json:"Magnitude,omitempty" bson:"Magnitude,omitempty"`
-	Subject    string             `json:"Subject,omitempty" bson:"Subject,omitempty"`
-	Group      string             `json:"Group,omitempty" bson:"Group,omitempty"`
-	Titles     []string           `json:"Titles,omitempty" bson:"Title1,omitempty"`
+	Reference  string             `json:"reference,omitempty" bson:"Reference,omitempty"`
+	Period     string             `json:"period,omitempty" bson:"Period,omitempty"`
+	DataValue  float32            `json:"data_value,omitempty" bson:"Data_value,omitempty"`
+	Suppressed bool               `json:"suppressed,omitempty" bson:"Suppressed,omitempty"`
+	Status     string             `json:"status,omitempty" bson:"Status,omitempty"`
+	Units      string             `json:"units,omitempty" bson:"Units,omitempty"`
+	Magnitude  int32              `json:"magnitude,omitempty" bson:"Magnitude,omitempty"`
+	Subject    string             `json:"subject,omitempty" bson:"Subject,omitempty"`
+	Group      string             `json:"group,omitempty" bson:"Group,omitempty"`
+	Titles     []string           `json:"titles,omitempty" bson:"Title1,omitempty"`
 }
 
 // Define a struct to represent parameters of the swagger
 type SwaggerParams struct {
-	Reference  string   `json:"Reference,omitempty" bson:"Reference,omitempty"`
-	Period     string   `json:"Period,omitempty" bson:"Period,omitempty"`
-	DataValue  float32  `json:"Data_value,omitempty" bson:"Data_value,omitempty"`
-	Suppressed bool     `json:"Suppressed,omitempty" bson:"Suppressed,omitempty"`
-	Status     string   `json:"Status,omitempty" bson:"Status,omitempty"`
-	Units      string   `json:"Units,omitempty" bson:"Units,omitempty"`
-	Magnitude  int32    `json:"Magnitude,omitempty" bson:"Magnitude,omitempty"`
-	Subject    string   `json:"Subject,omitempty" bson:"Subject,omitempty"`
-	Group      string   `json:"Group,omitempty" bson:"Group,omitempty"`
-	Titles     []string `json:"Titles,omitempty" bson:"Title1,omitempty"`
+	Reference  string   `json:"reference,omitempty" bson:"Reference,omitempty"`
+	Period     string   `json:"period,omitempty" bson:"Period,omitempty"`
+	DataValue  float32  `json:"data_value,omitempty" bson:"Data_value,omitempty"`
+	Suppressed bool     `json:"suppressed,omitempty" bson:"Suppressed,omitempty"`
+	Status     string   `json:"status,omitempty" bson:"Status,omitempty"`
+	Units      string   `json:"units,omitempty" bson:"Units,omitempty"`
+	Magnitude  int32    `json:"magnitude,omitempty" bson:"Magnitude,omitempty"`
+	Subject    string   `json:"subject,omitempty" bson:"Subject,omitempty"`
+	Group      string   `json:"group,omitempty" bson:"Group,omitempty"`
+	Titles     []string `json:"titles,omitempty" bson:"Title1,omitempty"`
 }
 
 var DB_URI string
@@ -213,11 +213,13 @@ func postCSVToMongoDBHandler(c *fiber.Ctx) error {
 	// Wait for all goroutines to finish
 	wg.Wait()
 
-	return c.SendString("CSV data inserted into MongoDB")
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"msg": "csv data successfully inserted into MongoDB",
+	})
 }
 
-// @Summary all the series
-// @Description Retrieve list of all the series from series collection
+// @Summary all the series (for better experience, use postman on this endpoint)
+// @Description Retrieve list of all the series from series collection, important note: swagger might be slow to represent large amount of data, use postman for better experience
 // @Tags Series
 // @Produce json
 // @Success 200 {array} Series
@@ -246,10 +248,6 @@ func getSeriesHandler(seriesCollection *mongo.Collection) fiber.Handler {
 
 // @Summary create new series
 // @Description Creates a new series using the provided fields.
-//
-//	Please ensure that the request payload includes only the fields shown in the CSV format.
-//	Any additional fields or different field names will be ignored.
-//
 // @Tags Series
 // @Produce json
 // @Param series body SwaggerParams true "Series object"
@@ -342,7 +340,7 @@ func patchSingleSeriesHandler(seriesCollection *mongo.Collection) fiber.Handler 
 		series := new(Series)
 		if err := c.BodyParser(series); err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "Invalid request payload: " + err.Error(),
+				"error": "invalid request payload: " + err.Error(),
 			})
 		}
 
@@ -364,7 +362,7 @@ func patchSingleSeriesHandler(seriesCollection *mongo.Collection) fiber.Handler 
 		)
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "Failed to update you selected id: " + err.Error(),
+				"error": "failed to update you selected id: " + err.Error(),
 			})
 		}
 
