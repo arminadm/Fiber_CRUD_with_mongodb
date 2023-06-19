@@ -20,4 +20,7 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - ./db:/data/db
+      - db_data:/data/db
+
+volumes:
+  db_data:
