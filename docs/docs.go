@@ -31,14 +31,14 @@ const docTemplate = `{
         },
         "/series": {
             "get": {
-                "description": "Retrieve list of all the series from series collection",
+                "description": "Retrieve list of all the series from series collection, important note: swagger might be slow to represent large amount of data, use postman for better experience",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "Series"
                 ],
-                "summary": "all the series",
+                "summary": "all the series (for better experience, use postman on this endpoint)",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -171,40 +171,40 @@ const docTemplate = `{
         "main.Series": {
             "type": "object",
             "properties": {
-                "Data_value": {
+                "_id": {
+                    "type": "string"
+                },
+                "data_value": {
                     "type": "number"
                 },
-                "Group": {
+                "group": {
                     "type": "string"
                 },
-                "Magnitude": {
+                "magnitude": {
                     "type": "integer"
                 },
-                "Period": {
+                "period": {
                     "type": "string"
                 },
-                "Reference": {
+                "reference": {
                     "type": "string"
                 },
-                "Status": {
+                "status": {
                     "type": "string"
                 },
-                "Subject": {
+                "subject": {
                     "type": "string"
                 },
-                "Suppressed": {
+                "suppressed": {
                     "type": "boolean"
                 },
-                "Titles": {
+                "titles": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
                 },
-                "Units": {
-                    "type": "string"
-                },
-                "_id": {
+                "units": {
                     "type": "string"
                 }
             }
@@ -212,37 +212,37 @@ const docTemplate = `{
         "main.SwaggerParams": {
             "type": "object",
             "properties": {
-                "Data_value": {
+                "data_value": {
                     "type": "number"
                 },
-                "Group": {
+                "group": {
                     "type": "string"
                 },
-                "Magnitude": {
+                "magnitude": {
                     "type": "integer"
                 },
-                "Period": {
+                "period": {
                     "type": "string"
                 },
-                "Reference": {
+                "reference": {
                     "type": "string"
                 },
-                "Status": {
+                "status": {
                     "type": "string"
                 },
-                "Subject": {
+                "subject": {
                     "type": "string"
                 },
-                "Suppressed": {
+                "suppressed": {
                     "type": "boolean"
                 },
-                "Titles": {
+                "titles": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
                 },
-                "Units": {
+                "units": {
                     "type": "string"
                 }
             }

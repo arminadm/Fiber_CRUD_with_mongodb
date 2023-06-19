@@ -3,52 +3,52 @@ definitions:
     properties:
       _id:
         type: string
-      Data_value:
+      data_value:
         type: number
-      Group:
+      group:
         type: string
-      Magnitude:
+      magnitude:
         type: integer
-      Period:
+      period:
         type: string
-      Reference:
+      reference:
         type: string
-      Status:
+      status:
         type: string
-      Subject:
+      subject:
         type: string
-      Suppressed:
+      suppressed:
         type: boolean
-      Titles:
+      titles:
         items:
           type: string
         type: array
-      Units:
+      units:
         type: string
     type: object
   main.SwaggerParams:
     properties:
-      Data_value:
+      data_value:
         type: number
-      Group:
+      group:
         type: string
-      Magnitude:
+      magnitude:
         type: integer
-      Period:
+      period:
         type: string
-      Reference:
+      reference:
         type: string
-      Status:
+      status:
         type: string
-      Subject:
+      subject:
         type: string
-      Suppressed:
+      suppressed:
         type: boolean
-      Titles:
+      titles:
         items:
           type: string
         type: array
-      Units:
+      units:
         type: string
     type: object
 info:
@@ -75,7 +75,9 @@ paths:
       tags:
       - Series
     get:
-      description: Retrieve list of all the series from series collection
+      description: 'Retrieve list of all the series from series collection, important
+        note: swagger might be slow to represent large amount of data, use postman
+        for better experience'
       produces:
       - application/json
       responses:
@@ -85,7 +87,7 @@ paths:
             items:
               $ref: '#/definitions/main.Series'
             type: array
-      summary: all the series
+      summary: all the series (for better experience, use postman on this endpoint)
       tags:
       - Series
     post:
