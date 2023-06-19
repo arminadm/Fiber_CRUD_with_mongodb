@@ -1,0 +1,161 @@
+definitions:
+  main.Series:
+    properties:
+      _id:
+        type: string
+      Data_value:
+        type: number
+      Group:
+        type: string
+      Magnitude:
+        type: integer
+      Period:
+        type: string
+      Reference:
+        type: string
+      Status:
+        type: string
+      Subject:
+        type: string
+      Suppressed:
+        type: boolean
+      Titles:
+        items:
+          type: string
+        type: array
+      Units:
+        type: string
+    type: object
+  main.SwaggerParams:
+    properties:
+      Data_value:
+        type: number
+      Group:
+        type: string
+      Magnitude:
+        type: integer
+      Period:
+        type: string
+      Reference:
+        type: string
+      Status:
+        type: string
+      Subject:
+        type: string
+      Suppressed:
+        type: boolean
+      Titles:
+        items:
+          type: string
+        type: array
+      Units:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /csv-to-mongo:
+    post:
+      description: After each time that this endpoint gets called, all of the csv
+        data will be imported to the database.
+      produces:
+      - application/json
+      responses: {}
+      summary: import csv data
+      tags:
+      - ImportData
+  /series:
+    delete:
+      description: This endpoint will wipe out the database, and deletes all of the
+        series
+      produces:
+      - application/json
+      responses: {}
+      summary: delete all of the series
+      tags:
+      - Series
+    get:
+      description: Retrieve list of all the series from series collection
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Series'
+            type: array
+      summary: all the series
+      tags:
+      - Series
+    post:
+      description: Creates a new series using the provided fields.
+      parameters:
+      - description: Series object
+        in: body
+        name: series
+        required: true
+        schema:
+          $ref: '#/definitions/main.SwaggerParams'
+      produces:
+      - application/json
+      responses: {}
+      summary: create new series
+      tags:
+      - Series
+  /series/{id}:
+    delete:
+      description: Deletes a single series object with the given id
+      parameters:
+      - description: Series ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: delete a single series object
+      tags:
+      - Series
+    get:
+      description: Get detail of the single series object
+      parameters:
+      - description: Series ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Series'
+            type: array
+      summary: single series
+      tags:
+      - Series
+    patch:
+      description: Change any field(except id) of any series
+      parameters:
+      - description: Series ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Series object
+        in: body
+        name: series
+        required: true
+        schema:
+          $ref: '#/definitions/main.SwaggerParams'
+      produces:
+      - application/json
+      responses: {}
+      summary: update the series fields
+      tags:
+      - Series
+swagger: "2.0"
